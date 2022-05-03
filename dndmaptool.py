@@ -28,7 +28,7 @@ print("Columns: ",end='')
 columns = int(input())
 mydata_path = os.path.join(os.path.dirname(__file__), "map.jpg")
 img = Image.open(mydata_path)
-dpi=img.info["dpi"][0]
+dpi=int(img.info["dpi"][0])
 width, height=img.size
 scalata=img.resize((dpi*columns,dpi*rows))
 os.mkdir("cropped")
