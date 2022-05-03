@@ -33,14 +33,19 @@ try:
 except:
     print("DPI: ",end='')
     dpi=int(input())
-    
-width, height=img.size
-scalata=img.resize((dpi*columns,dpi*rows))
+
+scaled=img.resize((dpi*columns,dpi*rows))
+width, height=scaled.size
 os.mkdir("cropped")
+
+fullwidth=math.floor(width/(paperformat[0]))*columns
+fullheight=math.floor(height/(paperformat[1]))*rows
+scaled_bg=Image.new('RGB',(fullwidth,fullheight),(255,255,255))
+scaled_bg.paste(scaled,(0,0))
 
 for i in range(0,math.ceil(rows/paperformat[1])):
     for j in range(0,math.ceil(columns/paperformat[0])):
-        img_cropped=scalata.crop((j*dpi*paperformat[0],i*dpi*paperformat[1],(j+1)*dpi*paperformat[0],(i+1)*dpi*paperformat[1]))
+        img_cropped=scaled_bg.crop((j*dpi*paperformat[0],i*dpi*paperformat[1],(j+1)*dpi*paperformat[0],(i+1)*dpi*paperformat[1]))
         img_cropped.save("cropped/cropped"+str(j)+"_"+str(i)+".jpg")
         pdf.add_page()
         pdf.image("cropped/cropped"+str(j)+"_"+str(i)+".jpg",papermargin[0],papermargin[1],paperformat[0],paperformat[1])
