@@ -14,7 +14,7 @@ A4margin = (0.65, 0.85)
 
 
 def wait_for_key():
-    print("Press any key to exit")
+    print("Press enter to exit")
     input()
     exit()
 
