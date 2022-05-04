@@ -7,10 +7,10 @@ import shutil
 
 folder_name = "tiles/"
 pdf_name = "tiles"
-A3 = (11, 16)
-A3margin = (0.35, 0.25)
-A4 = (8, 11)
-A4margin = (0.15, 0.35)
+A3 = (10, 15)
+A3margin = (0.85, 0.75)
+A4 = (7, 10)
+A4margin = (0.65, 0.85)
 
 
 def wait_for_key():
