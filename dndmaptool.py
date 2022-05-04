@@ -7,8 +7,8 @@ import shutil
 
 folder_name = "tiles/"
 pdf_name = "tiles"
-A3 = (10, 15)
-A3margin = (0.85, 0.75)
+A3 = (11, 16)
+A3margin = (0.35, 0.25)
 A4 = (7, 10)
 A4margin = (0.65, 0.85)
 
@@ -104,16 +104,40 @@ fullheight = (math.ceil(height/(paperformat[1]*dpi)))*(rows*dpi)
 scaled_padded_img = Image.new("RGB", (fullwidth, fullheight), (255, 255, 255))
 scaled_padded_img.paste(scaled_img, (0, 0))
 
-for i in range(0, math.ceil(rows / paperformat[1])):
-    for j in range(0, math.ceil(columns / paperformat[0])):
-        img_cropped = scaled_padded_img.crop(
-            (
-                j * dpi * paperformat[0],
-                i * dpi * paperformat[1],
-                (j + 1) * dpi * paperformat[0],
-                (i + 1) * dpi * paperformat[1],
+row_subdivision_count=math.ceil(rows / paperformat[1])*math.ceil(columns / paperformat[0])
+column_subdivision_count=math.ceil(rows / paperformat[0])*math.ceil(columns / paperformat[1])
+
+
+if row_subdivision_count<column_subdivision_count:
+    crop_type=0
+    first_range=range(0, math.ceil(rows / paperformat[1]))
+    second_range=range(0, math.ceil(columns / paperformat[0]))
+else:
+    crop_type=1
+    first_range=range(0, math.ceil(rows / paperformat[0]))
+    second_range=range(0, math.ceil(columns / paperformat[1]))
+
+for i in first_range:
+    for j in second_range:
+        if crop_type==0:
+            img_cropped = scaled_padded_img.crop(
+                (
+                    j * dpi * paperformat[0],
+                    i * dpi * paperformat[1],
+                    (j + 1) * dpi * paperformat[0],
+                    (i + 1) * dpi * paperformat[1],
+                )
             )
-        )
+        else:
+            img_cropped = scaled_padded_img.crop(
+                (
+                    i * dpi * paperformat[0],
+                    j * dpi * paperformat[1],
+                    (i + 1) * dpi * paperformat[0],
+                    (j + 1) * dpi * paperformat[1],
+                )
+            )
+
         img_cropped.save(folder_name + str(j) + "_" + str(i) + ".jpg")
         pdf.add_page()
         pdf.image(
@@ -123,5 +147,5 @@ for i in range(0, math.ceil(rows / paperformat[1])):
             paperformat[0],
             paperformat[1],
         )
-
+            
 pdf.output(pdf_name + ".pdf", "F")
