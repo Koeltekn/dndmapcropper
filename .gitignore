@@ -1,12 +1,6 @@
 .DS_Store
 cropped.pdf
-map.jpg
-cropped/cropped0_0.jpg
-cropped/cropped0_1.jpg
-cropped/cropped0_2.jpg
-cropped/cropped1_0.jpg
-cropped/cropped1_1.jpg
-cropped/cropped1_2.jpg
-cropped/cropped2_0.jpg
-cropped/cropped2_1.jpg
-cropped/cropped2_2.jpg
+map.*
+*.pdf
+.vscode/*
+tiles/*
