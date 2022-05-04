@@ -98,45 +98,34 @@ while(paperformat==""):
 scaled_img = map_img.resize((dpi * columns, dpi * rows))
 width, height = scaled_img.size
 
-# Add white padding
-fullwidth = (math.ceil(width/(paperformat[0]*dpi)))*(columns*dpi)
-fullheight = (math.ceil(height/(paperformat[1]*dpi)))*(rows*dpi)
-scaled_padded_img = Image.new("RGB", (fullwidth, fullheight), (255, 255, 255))
-scaled_padded_img.paste(scaled_img, (0, 0))
-
 row_subdivision_count=math.ceil(rows / paperformat[1])*math.ceil(columns / paperformat[0])
 column_subdivision_count=math.ceil(rows / paperformat[0])*math.ceil(columns / paperformat[1])
 
+if row_subdivision_count>column_subdivision_count:
+    scaled_img=scaled_img.rotate(90,expand=1)
+    width,height=height,width
+    rows,columns=columns,rows
 
-if row_subdivision_count<column_subdivision_count:
-    crop_type=0
-    first_range=range(0, math.ceil(rows / paperformat[1]))
-    second_range=range(0, math.ceil(columns / paperformat[0]))
-else:
-    crop_type=1
-    first_range=range(0, math.ceil(rows / paperformat[0]))
-    second_range=range(0, math.ceil(columns / paperformat[1]))
+# Add white padding
+fullwidth = (math.ceil(width/(paperformat[0]*dpi)))*(columns*dpi)
+print(fullwidth)
+fullheight = (math.ceil(height/(paperformat[1]*dpi)))*(rows*dpi)
+print(fullheight)
+scaled_padded_img = Image.new("RGB", (fullwidth, fullheight), (255, 255, 255))
+scaled_padded_img.paste(scaled_img, (0, 0))
 
-for i in first_range:
-    for j in second_range:
-        if crop_type==0:
-            img_cropped = scaled_padded_img.crop(
-                (
-                    j * dpi * paperformat[0],
-                    i * dpi * paperformat[1],
-                    (j + 1) * dpi * paperformat[0],
-                    (i + 1) * dpi * paperformat[1],
-                )
+scaled_padded_img.save("test.png")
+
+for i in range(0, math.ceil(rows / paperformat[1])):
+    for j in range(0, math.ceil(columns / paperformat[0])):
+        img_cropped = scaled_padded_img.crop(
+            (
+                j * dpi * paperformat[0],
+                i * dpi * paperformat[1],
+                (j + 1) * dpi * paperformat[0],
+                (i + 1) * dpi * paperformat[1],
             )
-        else:
-            img_cropped = scaled_padded_img.crop(
-                (
-                    i * dpi * paperformat[0],
-                    j * dpi * paperformat[1],
-                    (i + 1) * dpi * paperformat[0],
-                    (j + 1) * dpi * paperformat[1],
-                )
-            )
+        )
 
         img_cropped.save(folder_name + str(j) + "_" + str(i) + ".jpg")
         pdf.add_page()
