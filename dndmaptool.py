@@ -108,13 +108,9 @@ if row_subdivision_count>column_subdivision_count:
 
 # Add white padding
 fullwidth = (math.ceil(width/(paperformat[0]*dpi)))*(columns*dpi)
-print(fullwidth)
 fullheight = (math.ceil(height/(paperformat[1]*dpi)))*(rows*dpi)
-print(fullheight)
 scaled_padded_img = Image.new("RGB", (fullwidth, fullheight), (255, 255, 255))
 scaled_padded_img.paste(scaled_img, (0, 0))
-
-scaled_padded_img.save("test.png")
 
 for i in range(0, math.ceil(rows / paperformat[1])):
     for j in range(0, math.ceil(columns / paperformat[0])):
