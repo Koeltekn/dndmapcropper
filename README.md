@@ -29,8 +29,12 @@ pip install Pillow
 
 ## DPI
 The software automatically detects DPI from 'dpi' field in the map file, however not all files includes this field, in this case the program will prompt you to insert it manually.
-### Find DPI in a picure on Windows:
+### Find DPI of a picure on Windows:
 - Right click on the image
 - Properties
 - Switch to Details tab
 - Horizontal resolution and Vertical resolution in the Image section shows the dpi
+### Find DPI of a picture on MacOS:
+- Open the image with "Preview"
+- Click "Tools" > "Show inspector" (or ⌘I)
+- DPI is shown in the popup
