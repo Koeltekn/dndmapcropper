@@ -7,6 +7,12 @@ import shutil
 
 folder_name = "tiles/"
 pdf_name = "tiles"
+A0 = (32, 46)
+A0margin = (0.55, 0.4)
+A1 = (22, 32)
+A1margin = (0.7, 0.55)
+A2 = (15, 22)
+A2margin = (0.75, 0.7)
 A3 = (11, 16)
 A3margin = (0.35, 0.25)
 A4 = (7, 10)
@@ -62,7 +68,19 @@ def get_image_dpi(image):
 
 def get_paper_format():
     paperformatinput = input()
-    if paperformatinput == "A3":
+    if paperformatinput == "A0":
+        paperformat = A0
+        papermargin = A0margin
+        pdf = FPDF("P", "in", "A0")
+    elif paperformatinput == "A1":
+        paperformat = A1
+        papermargin = A1margin
+        pdf = FPDF("P", "in", "A1")
+    elif paperformatinput == "A2":
+        paperformat = A2
+        papermargin = A2margin
+        pdf = FPDF("P", "in", "A2")
+    elif paperformatinput == "A3":
         paperformat = A3
         papermargin = A3margin
         pdf = FPDF("P", "in", "A3")
@@ -87,7 +105,7 @@ rows = int(input())
 print("Number of columns: ", end="")
 columns = int(input())
 
-print("Choose output format (A3 / A4): ", end="")
+print("Choose output format (A0 / A1 / A2 / A3 / A4): ", end="")
 paperformat, papermargin, pdf = get_paper_format()
 while(paperformat==""):
     print("Invalid paper format, choose either A4 or A3")
